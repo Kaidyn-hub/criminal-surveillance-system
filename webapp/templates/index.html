@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Criminal Surveillance System</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <header>Criminal Surveillance System Dashboard</header>
+
+  <div class="container">
+
+    <!-- Live Video Section -->
+    <div class="video-section">
+      <div class="video-header">
+        <h2 class="video-title">Live Camera Feed</h2>
+        <div id="clock" class="clock">----</div>
+      </div>
+
+      <img
+        src="{{ url_for('stream') }}"
+        class="video-feed"
+        alt="Live Feed"
+      >
+
+      <div class="alert-box" id="alertBox">
+        ⚠️ Alert Detected!
+      </div>
+
+      <div class="status" id="statusBox">
+        ✅ System Running Normally
+      </div>
+    </div>
+
+
+    <!-- Info and Logs Section -->
+    <div class="info-section">
+      <h2>Detection Logs</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Type</th>
+            <th>Confidence</th>
+            <th>Timestamp</th>
+          </tr>
+        </thead>
+        <tbody id="logTable">
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
