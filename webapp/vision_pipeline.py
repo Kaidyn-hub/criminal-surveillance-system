@@ -73,7 +73,7 @@ class VisionPipeline:
         rgb = cv2.cvtColor(roi, cv2.COLOR_BGR2RGB)
         x = self.tf(rgb).unsqueeze(0).to(self.device)
         probs = torch.softmax(self.gesture_model(x), dim=1)[0]
-        return float(probs[0]), float(probs[1])  # assault, normal
+        return float(probs[0]), float(probs[1]) 
 
     def step(self):
         ok, frame = self.cap.read()
@@ -85,8 +85,7 @@ class VisionPipeline:
 
         results = self.yolo(frame, imgsz=self.img_size, verbose=False)[0]
 
-        # Track best scores for logging
-        best_weapon = None  # (name, conf)
+        best_weapon = None
         best_assault_p = 0.0
 
         weapon_trigger = False
@@ -97,7 +96,6 @@ class VisionPipeline:
             conf = float(box.conf[0])
             x1, y1, x2, y2 = map(int, box.xyxy[0])
 
-            # PERSON
             if cls == self.person_class and conf >= self.person_conf:
                 x1c, y1c = max(0, x1), max(0, y1)
                 x2c, y2c = min(w, x2), min(h, y2)
@@ -128,7 +126,6 @@ class VisionPipeline:
                     2
                 )
 
-            # WEAPON
             elif cls in self.weapon_classes and conf >= self.weapon_conf:
                 weapon_trigger = True
                 name = self.weapon_classes[cls]
@@ -147,13 +144,26 @@ class VisionPipeline:
                     2
                 )
 
-        # Temporal rule for gesture
         self.assault_streak = self.assault_streak + 1 if assault_frame else 0
         assault_trigger = self.assault_streak >= self.assault_consec
-        alert = weapon_trigger or assault_trigger
+        is_gun = weapon_trigger
+        is_assault = assault_trigger
 
-        status = "ALERT" if alert else "NORMAL"
+        if is_gun:
+            status = "DANGER"
+        elif is_assault:
+            status = "ALERT"
+        else:
+            status = "NORMAL"
+
         self.latest_status = {"status": status, "assault_streak": self.assault_streak}
+
+        color = (0, 255, 0) 
+
+        if status == "DANGER":
+            color = (0, 0, 255) 
+        elif status == "ALERT":
+            color = (0, 165, 255)  
 
         cv2.putText(
             display,
@@ -161,11 +171,12 @@ class VisionPipeline:
             (20, 40),
             cv2.FONT_HERSHEY_SIMPLEX,
             1.0,
-            (0, 0, 255) if alert else (0, 255, 0),
+            color,
             3
         )
 
-        # Save outputs + logs with REAL confidence
+        alert = (status != "NORMAL")
+
         now = time.time()
         if alert and (now - self.last_event_time) >= self.cooldown_sec:
             self.last_event_time = now

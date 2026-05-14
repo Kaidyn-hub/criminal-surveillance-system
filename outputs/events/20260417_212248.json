@@ -1,0 +1,14 @@
+{
+  "event_id": "20260417_212248",
+  "timestamp": "2026-04-17 21:22:48",
+  "status": "DANGER",
+  "weapon_trigger": true,
+  "assault_trigger": true,
+  "assault_streak": 5,
+  "best_weapon": {
+    "type": "Pistol",
+    "confidence": 0.759
+  },
+  "best_assault_prob": 0.8903,
+  "saved_frame": "outputs\\frames\\20260417_212248.jpg"
+}

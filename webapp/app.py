@@ -5,9 +5,8 @@ from vision_pipeline import VisionPipeline
 
 app = Flask(__name__)
 
-# Absolute paths so Windows never breaks relative paths
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))          # .../webapp
-PROJECT_ROOT = os.path.abspath(os.path.join(BASE_DIR, ".."))   # .../criminal-surveillance-system
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))        
+PROJECT_ROOT = os.path.abspath(os.path.join(BASE_DIR, ".."))   
 
 YOLO_PATH = os.path.join(PROJECT_ROOT, "models", "yolo", "yolo.pt")
 CNN_PATH  = os.path.join(PROJECT_ROOT, "models", "cnn", "cnn.pth")
@@ -56,5 +55,4 @@ def api_logs():
     return jsonify(list(pipeline.logs))
 
 if __name__ == "__main__":
-    # Open http://127.0.0.1:5000
     app.run(host="0.0.0.0", port=5000, debug=False, threaded=True)

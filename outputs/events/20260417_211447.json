@@ -1,0 +1,11 @@
+{
+  "event_id": "20260417_211447",
+  "timestamp": "2026-04-17 21:14:47",
+  "status": "ALERT",
+  "weapon_trigger": false,
+  "assault_trigger": true,
+  "assault_streak": 18,
+  "best_weapon": null,
+  "best_assault_prob": 0.999,
+  "saved_frame": "outputs\\frames\\20260417_211447.jpg"
+}
