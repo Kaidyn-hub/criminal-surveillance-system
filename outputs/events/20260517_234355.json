@@ -1,0 +1,10 @@
+{
+  "event_id": "20260517_234355",
+  "timestamp": "2026-05-17 23:43:55",
+  "status": "NORMAL",
+  "weapon_trigger": false,
+  "assault_trigger": false,
+  "assault_streak": 0,
+  "best_assault_prob": 0.0001,
+  "saved_frame": "outputs\\frames\\20260517_234355.jpg"
+}
