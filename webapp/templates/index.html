@@ -1,13 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Criminal Surveillance System</title>
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet"
-        href="{{ url_for('static', filename='style.css') }}">
+  <title>
+    Criminal Surveillance System
+  </title>
+
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}"
+  >
+
 </head>
 
 <body>
@@ -18,9 +27,6 @@
 
   <div class="container">
 
-    <!-- ================================= -->
-    <!-- LIVE VIDEO SECTION -->
-    <!-- ================================= -->
     <div class="video-section">
 
       <div class="video-header">
@@ -42,11 +48,11 @@
       >
 
       <div class="alert-box" id="alertBox">
-        ⚠️ Alert Detected!
+         Alert Detected!
       </div>
 
       <div class="status" id="statusBox">
-        ✅ System Running Normally
+         System Running Normally
       </div>
 
     </div>
@@ -55,41 +61,62 @@
 
       <div class="metrics-panel">
 
-        <h2>System Metrics</h2>
+        <h2>
+          System Metrics
+        </h2>
 
         <div class="metric-box">
+
           <span>Status</span>
-          <h3 id="metricStatus">NORMAL</h3>
+
+          <h3 id="metricStatus">
+            NORMAL
+          </h3>
+
         </div>
 
         <div class="metric-box">
+
           <span>FPS</span>
-          <h3 id="fps">0</h3>
+
+          <h3 id="fps">
+            0
+          </h3>
+
         </div>
 
         <div class="metric-box">
+
           <span>Latency</span>
-          <h3 id="latency">0 ms</h3>
-        </div>
 
-        <div class="metric-box">
-          <span>Accuracy</span>
-          <h3 id="accuracy">0%</h3>
+          <h3 id="latency">
+            0 ms
+          </h3>
+
         </div>
 
       </div>
 
-      <h2>Detection Logs</h2>
+      <h2>
+        Detection Logs
+      </h2>
 
       <table>
 
         <thead>
+
           <tr>
+
             <th>#</th>
+
             <th>Type</th>
+
             <th>Confidence</th>
+
             <th>Timestamp</th>
+
           </tr>
+
         </thead>
 
         <tbody id="logTable">
@@ -101,22 +128,24 @@
 
   </div>
 
-<script>
+  <script>
 
-  function updateClock(){
+    function updateClock() {
 
       const now = new Date();
 
-      document.getElementById("clock").innerText =
+      document.getElementById(
+        "clock"
+      ).innerText =
         now.toLocaleTimeString();
 
     }
 
     setInterval(updateClock, 1000);
 
-    async function updateMetrics(){
+    async function updateMetrics() {
 
-      try{
+      try {
 
         const response =
           await fetch('/api/status');
@@ -126,40 +155,74 @@
 
         document.getElementById(
           'metricStatus'
-        ).innerText = data.status;
+        ).innerText =
+          data.status;
 
         document.getElementById(
           'fps'
-        ).innerText = data.fps;
+        ).innerText =
+          data.fps;
+
 
         document.getElementById(
           'latency'
         ).innerText =
           data.latency_ms + " ms";
 
-        document.getElementById(
-          'accuracy'
-        ).innerText =
-          data.accuracy + "%";
+        const statusBox =
+          document.getElementById(
+            "statusBox"
+          );
 
-        document.getElementById(
-          'precision'
-        ).innerText =
-          data.precision + "%";
+        const alertBox =
+          document.getElementById(
+            "alertBox"
+          );
 
-        document.getElementById(
-          'recall'
-        ).innerText =
-          data.recall + "%";
+        if (data.status === "DANGER") {
 
-        document.getElementById(
-          'f1'
-        ).innerText =
-          data.f1_score + "%";
+          statusBox.innerText =
+            "🚨 Dangerous Weapon Detected";
+
+          statusBox.style.background =
+            "#ef4444";
+
+          alertBox.style.display =
+            "block";
+
+        }
+
+        else if (
+          data.status === "ALERT"
+        ) {
+
+          statusBox.innerText =
+            "Suspicious Behavior Detected";
+
+          statusBox.style.background =
+            "#f59e0b";
+
+          alertBox.style.display =
+            "block";
+
+        }
+
+        else {
+
+          statusBox.innerText =
+            "System Running Normally";
+
+          statusBox.style.background =
+            "#22c55e";
+
+          alertBox.style.display =
+            "none";
+
+        }
 
       }
 
-      catch(err){
+      catch (err) {
 
         console.log(err);
 
@@ -169,9 +232,9 @@
 
     setInterval(updateMetrics, 500);
 
-    async function updateLogs(){
+    async function updateLogs() {
 
-      try{
+      try {
 
         const response =
           await fetch('/api/logs');
@@ -201,7 +264,7 @@
 
       }
 
-      catch(err){
+      catch (err) {
 
         console.log(err);
 

@@ -38,11 +38,8 @@ pipeline = VisionPipeline(
     yolo_weights=YOLO_PATH,
     gesture_ckpt=CNN_PATH,
     video_source=0,
-
     weapon_conf=0.25,
-
     person_conf=0.5,
-
     assault_thresh=0.8
 )
 
@@ -53,28 +50,42 @@ def index():
 
 @app.route("/stream")
 def stream():
+
     def gen():
+
         FPS_LIMIT = 12
+
         FRAME_DELAY = 1.0 / FPS_LIMIT
+
         while True:
+
             t_start = time.time()
+
             pipeline.step()
+
             if pipeline.latest_frame is None:
+
                 time.sleep(0.01)
+
                 continue
+
             yield (
                 b"--frame\r\n"
                 b"Content-Type: image/jpeg\r\n\r\n"
                 + pipeline.latest_frame +
                 b"\r\n"
             )
+
             elapsed = (
                 time.time() - t_start
             )
+
             if elapsed < FRAME_DELAY:
+
                 time.sleep(
                     FRAME_DELAY - elapsed
                 )
+
     return Response(
         gen(),
         mimetype="multipart/x-mixed-replace; boundary=frame"
@@ -92,13 +103,6 @@ def api_logs():
 
     return jsonify(
         list(pipeline.logs)
-    )
-
-@app.route("/api/metrics")
-def api_metrics():
-
-    return jsonify(
-        pipeline.get_metrics()
     )
 
 @app.route("/api/health")
@@ -121,4 +125,4 @@ if __name__ == "__main__":
         port=5000,
         debug=False,
         threaded=True
-    )   
+    )
