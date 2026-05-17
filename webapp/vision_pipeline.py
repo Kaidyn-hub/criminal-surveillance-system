@@ -23,7 +23,7 @@ class VisionPipeline:
         weapon_conf=0.5,
         person_conf=0.5,
         assault_thresh=0.8,
-        assault_consec=5,
+        assault_consec=1,
         cooldown_sec=3.0,
         out_dir="outputs",
         log_keep=50
@@ -312,7 +312,7 @@ class VisionPipeline:
         }
 
         alert = (
-            status != "NORMAL"
+            status != "ALERT"
         )
 
         now = time.time()
