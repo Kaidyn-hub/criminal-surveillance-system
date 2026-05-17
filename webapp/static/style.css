@@ -10,9 +10,6 @@ body{
   color:#f8fafc;
 }
 
-/* ================================= */
-/* HEADER */
-/* ================================= */
 
 header{
   background:#1e293b;
@@ -24,9 +21,6 @@ header{
   border-bottom:2px solid #38bdf8;
 }
 
-/* ================================= */
-/* MAIN CONTAINER */
-/* ================================= */
 
 .container{
   display:grid;
@@ -38,9 +32,6 @@ header{
   align-items:start;
 }
 
-/* ================================= */
-/* CARD SECTIONS */
-/* ================================= */
 
 .video-section,
 .info-section{
@@ -50,9 +41,6 @@ header{
   box-shadow:0 0 15px rgba(0,0,0,0.3);
 }
 
-/* ================================= */
-/* VIDEO HEADER */
-/* ================================= */
 
 .video-header{
   display:flex;
@@ -78,9 +66,6 @@ header{
   border-radius:8px;
 }
 
-/* ================================= */
-/* VIDEO FEED */
-/* ================================= */
 
 .video-feed{
   width:100%;
@@ -91,9 +76,6 @@ header{
   background:black;
 }
 
-/* ================================= */
-/* ALERT + STATUS */
-/* ================================= */
 
 .alert-box{
   display:none;
@@ -116,10 +98,6 @@ header{
   font-size:1rem;
 }
 
-/* ================================= */
-/* METRICS PANEL */
-/* ================================= */
-
 .metrics-panel{
   margin-bottom:25px;
 }
@@ -129,9 +107,6 @@ header{
   font-size:1.6rem;
 }
 
-/* ================================= */
-/* METRIC BOX */
-/* ================================= */
 
 .metric-box{
   background:#0f172a;
@@ -153,9 +128,6 @@ header{
   color:white;
 }
 
-/* ================================= */
-/* TABLE */
-/* ================================= */
 
 .info-section h2{
   margin-bottom:12px;
@@ -193,10 +165,6 @@ tbody td{
   border-bottom:1px solid rgba(255,255,255,0.05);
   font-size:.95rem;
 }
-
-/* ================================= */
-/* RESPONSIVE */
-/* ================================= */
 
 @media(max-width:1100px){
 
