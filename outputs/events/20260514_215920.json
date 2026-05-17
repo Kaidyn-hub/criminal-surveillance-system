@@ -1,0 +1,9 @@
+{
+  "event_id": "20260514_215920",
+  "timestamp": "2026-05-14 21:59:20",
+  "status": "DANGER",
+  "weapon_trigger": true,
+  "assault_trigger": false,
+  "assault_streak": 2,
+  "saved_frame": "outputs\\frames\\20260514_215920.jpg"
+}
