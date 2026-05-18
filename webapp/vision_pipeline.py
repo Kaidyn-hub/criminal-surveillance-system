@@ -22,8 +22,8 @@ class VisionPipeline:
         weapon_classes=None,
         weapon_conf=0.5,
         person_conf=0.5,
-        assault_thresh=0.8,
-        assault_consec=5,
+        assault_thresh=0.5,
+        assault_consec=2,
         cooldown_sec=3.0,
         out_dir="outputs",
         log_keep=50
@@ -192,6 +192,34 @@ class VisionPipeline:
 
                 assault_p, _ = self.gesture_predict(roi)
 
+                holding_weapon = False
+
+                for wbox in results.boxes:
+
+                    wcls = int(wbox.cls[0])
+                    wconf = float(wbox.conf[0])
+
+                    if (
+                        wcls in self.weapon_classes
+                        and wconf >= self.weapon_conf
+                    ):
+
+                        wx1, wy1, wx2, wy2 = map(
+                            int,
+                            wbox.xyxy[0]
+                        )
+
+                        if (
+                            wx1 >= x1 and wy1 >= y1
+                            and wx2 <= x2 and wy2 <= y2
+                        ):
+
+                            holding_weapon = True
+                            break
+
+                if holding_weapon:
+                    assault_p = 1.0
+
                 if assault_p > best_assault_p:
                     best_assault_p = assault_p
 
@@ -205,7 +233,7 @@ class VisionPipeline:
                 )
 
                 label = (
-                    "SUSPICIOUS"
+                    "SUSPICIOUS BEHAVIOR"
                     if assault_p >= self.assault_thresh
                     else "NORMAL"
                 )

@@ -40,7 +40,8 @@ pipeline = VisionPipeline(
     video_source=0,
     weapon_conf=0.25,
     person_conf=0.5,
-    assault_thresh=0.8
+    assault_thresh=0.5,
+    assault_consec=2
 )
 
 @app.route("/")
